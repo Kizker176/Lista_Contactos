@@ -1,35 +1,26 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Contacto } from '../../models/contacto.class';
 
 const ContactoComponent = ({ contacto, conectado, remove }) => {
-
-    function ContactoConectadoIcon() {
-        if (!contacto.conectado) {
-            return (<i onClick={() => conectado(contacto)} className='bi-toggle-on task-action' style={{ color: 'green' }}></i>)
-        } else {
-            return (<i onClick={() => conectado(contacto)} className='bi-toggle-off task-action' style={{ color: 'grey' }}></i>)
-        }
-    }
-
     return (
-        <tr className='fw-normal'>
-            <th>
-                <span className='ms-2'>{contacto.name}</span>
-            </th>
-            <td className='align-middle'>
-                {/* Execution of function to return icon depending on completion */}
-                {ContactoConectadoIcon()}
-                <i className='bi-trash task-action' style={{ color: 'tomato' }} onClick={() => remove(contacto)}></i>
-            </td>
-        </tr>
-    );
-}
+        <div className="contact-component">
+            <h2>{contacto.nombre}</h2>
+            <span>{contacto.email}</span>
 
-ContactoComponent.propTypes = {
-    contacto: PropTypes.instanceOf(Contacto).isRequired,
-    conectado: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired
+            <button
+                style={{ backgroundColor: contacto.conectado ? 'green' : 'red' }}
+                className="state-button"
+                onClick={() => {
+                    conectado(contacto);
+                }}
+            >
+                {contacto.conectado ? 'Conectado' : 'Desconectado'}
+            </button>
+
+            <button className="remove-button" onClick={() => remove(contacto)}>
+                Borrar
+            </button>
+        </div>
+    );
 }
 
 export default ContactoComponent;
